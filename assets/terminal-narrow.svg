@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="350" viewBox="0 0 400 350" role="img" aria-labelledby="title desc">
+  <title id="title">lls144 / hardware workbench</title>
+  <desc id="desc">Compact hardware developer terminal. Power electronics and hardware design; circuits, control and board bring-up; embedded systems and industrial control.</desc>
+  <!-- Same content as terminal.svg, manually reflowed for narrow README widths. -->
+  <rect width="400" height="350" rx="8" fill="#14201C"/>
+  <path d="M8 0H392Q400 0 400 8V42H0V8Q0 0 8 0Z" fill="#1D2C25"/>
+  <path d="M0 42H400M0 315H400" stroke="#65786B" stroke-opacity="0.35"/>
+  <rect x="20" y="17" width="8" height="8" fill="#F46B5B"/>
+  <rect x="36" y="17" width="8" height="8" fill="#D5B477"/>
+  <rect x="52" y="17" width="8" height="8" fill="#8DBB9A"/>
+  <g font-family="Consolas, 'Liberation Mono', Menlo, monospace">
+    <text x="80" y="26" font-size="13" fill="#B6C4B8">lls144 / workbench</text>
+    <g font-size="18" fill="#F2F0E6">
+      <text x="20" y="80"><tspan fill="#8DBB9A">$ </tspan>whoami <tspan fill="#D5B477">--verbose</tspan></text>
+      <text x="20" y="115" font-size="24">Power electronics</text>
+      <text x="20" y="145" font-size="24">&amp; hardware design</text>
+      <text x="20" y="174" font-size="16" fill="#B6C4B8">circuits / control / bring-up</text>
+      <text x="20" y="212"><tspan fill="#8DBB9A">$ </tspan>cat <tspan fill="#D5B477">currently_building.md</tspan></text>
+      <text x="20" y="240" font-size="18" fill="#B6C4B8">power stages / embedded systems</text>
+      <text x="20" y="264" font-size="18" fill="#B6C4B8">industrial control</text>
+      <text x="20" y="299"><tspan fill="#8DBB9A">$ </tspan>ls <tspan fill="#F46B5B">./hardware/</tspan></text>
+    </g>
+    <text x="20" y="337" font-size="12" fill="#B6C4B8">UTF-8</text>
+    <text x="380" y="337" text-anchor="end" font-size="12" fill="#8DBB9A">~/hardware</text>
+  </g>
+  <path d="M348 101H364V109H356V117H340V109H348Z" fill="#65786B"/>
+  <rect x="364" y="101" width="8" height="8" fill="#F46B5B"/>
+  <rect id="cursor" x="190" y="283" width="10" height="20" fill="#F2F0E6">
+    <animate attributeName="opacity" values="1;0" calcMode="discrete" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+</svg>

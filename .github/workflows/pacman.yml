@@ -1,0 +1,132 @@
+name: Update Pac-Man contributions
+
+on:
+  schedule:
+    - cron: '47 7 * * *' # 15:47 Asia/Shanghai; GitHub may delay scheduled runs.
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/pacman.yml
+      - tools/pacman-network.cjs
+      - tools/validate_pacman.py
+
+permissions: {}
+
+concurrency:
+  group: pacman-output
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    if: github.repository == 'lls144/lls144' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Read the generation guard and validator
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Generate real GitHub contribution graphs
+        uses: abozanona/pacman-contribution-graph@7332e1de7903ab780c3692a4127a59cc13872daa # v5.3.2
+        env:
+          NODE_OPTIONS: --require ${{ github.workspace }}/tools/pacman-network.cjs
+          LANG: en_US.UTF-8
+        with:
+          github_user_name: lls144
+          github_token: ${{ github.token }}
+          games: pacman
+          player_style: opportunistic
+          hide_month_labels: 'false'
+
+      - name: Validate both self-contained SVGs
+        run: python3 tools/validate_pacman.py dist
+
+      - name: Pass the graphs and anonymous data provenance to the publisher
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: pacman-svg
+          path: |
+            dist/pacman-contribution-graph.svg
+            dist/pacman-contribution-graph-dark.svg
+            dist/pacman-provenance.json
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: generate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the repository for the output publisher
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          # Only this job receives a write token; checkout removes it on cleanup.
+          persist-credentials: true
+
+      - name: Retrieve the validated generation from this run
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: pacman-svg
+          path: ${{ runner.temp }}/pacman-svg
+
+      - name: Validate the received artifacts
+        env:
+          SVG_DIR: ${{ runner.temp }}/pacman-svg
+        run: python3 tools/validate_pacman.py "$SVG_DIR"
+
+      - name: Update only the managed SVGs on output
+        shell: bash
+        env:
+          SVG_DIR: ${{ runner.temp }}/pacman-svg
+        run: |
+          set -euo pipefail
+          remote_ref="$(git ls-remote --heads origin refs/heads/output)"
+          if [[ -n "$remote_ref" ]]; then
+            git fetch --no-tags origin refs/heads/output
+            git switch --force-create output FETCH_HEAD
+          else
+            git switch --orphan output
+          fi
+
+          marker='.pacman-managed'
+          owner='lls144/pacman/v1'
+          if [[ -L "$marker" || -d "$marker" ]]; then
+            echo 'Unsafe output marker; refusing to replace it.' >&2
+            exit 1
+          fi
+          if [[ -e "$marker" ]] && [[ "$(cat "$marker")" != "$owner" ]]; then
+            echo 'Output marker belongs to another publisher.' >&2
+            exit 1
+          fi
+          for file in pacman-contribution-graph.svg pacman-contribution-graph-dark.svg pacman-provenance.json; do
+            if [[ -L "$file" || -d "$file" ]]; then
+              echo "Unsafe output path: $file" >&2
+              exit 1
+            fi
+            if [[ -e "$file" && ! -f "$marker" ]]; then
+              echo "Unmanaged existing file: $file; review it manually first." >&2
+              exit 1
+            fi
+          done
+
+          cp "$SVG_DIR/pacman-contribution-graph.svg" ./pacman-contribution-graph.svg
+          cp "$SVG_DIR/pacman-contribution-graph-dark.svg" ./pacman-contribution-graph-dark.svg
+          cp "$SVG_DIR/pacman-provenance.json" ./pacman-provenance.json
+          printf '%s\n' "$owner" > "$marker"
+          git add -- "$marker" pacman-contribution-graph.svg pacman-contribution-graph-dark.svg pacman-provenance.json
+          if git diff --cached --quiet; then
+            echo 'No graph changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update Pac-Man contribution graphs'
+          # Never force-push; a concurrent change makes this fail safely.
+          git push origin HEAD:refs/heads/output

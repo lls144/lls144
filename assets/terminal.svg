@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="316" viewBox="0 0 940 316" role="img" aria-labelledby="title desc">
+  <title id="title">lls144 / hardware workbench</title>
+  <desc id="desc">A hardware developer terminal. Power electronics and hardware design; circuits, control and board bring-up; embedded systems and industrial control.</desc>
+  <!-- Editable text; system monospace fonts only. The cursor is the only animation. -->
+  <defs>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M16 0H0V16" fill="none" stroke="#65786B" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="940" height="316" rx="9" fill="#14201C"/>
+  <path d="M9 0H931Q940 0 940 9V42H0V9Q0 0 9 0Z" fill="#1D2C25"/>
+  <path d="M0 42H940M0 281H940" stroke="#65786B" stroke-opacity="0.35"/>
+  <rect x="24" y="17" width="8" height="8" fill="#F46B5B"/>
+  <rect x="40" y="17" width="8" height="8" fill="#D5B477"/>
+  <rect x="56" y="17" width="8" height="8" fill="#8DBB9A"/>
+  <g font-family="Consolas, 'Liberation Mono', Menlo, monospace">
+    <text x="84" y="26" font-size="13" fill="#B6C4B8">lls144 / workbench</text>
+    <text x="912" y="26" text-anchor="end" font-size="12" fill="#B6C4B8">~/hardware</text>
+    <g font-size="18" fill="#F2F0E6">
+      <text x="32" y="80"><tspan fill="#8DBB9A">$ </tspan>whoami <tspan fill="#D5B477">--verbose</tspan></text>
+      <text x="32" y="117" font-size="26">Power electronics &amp; hardware design</text>
+      <text x="32" y="147" font-size="17" fill="#B6C4B8">circuits / control / board bring-up</text>
+      <text x="32" y="187"><tspan fill="#8DBB9A">$ </tspan>cat <tspan fill="#D5B477">currently_building.md</tspan></text>
+      <text x="32" y="217" fill="#B6C4B8">power stages / embedded systems / industrial control</text>
+      <text x="32" y="260"><tspan fill="#8DBB9A">$ </tspan>ls <tspan fill="#F46B5B">./hardware/</tspan></text>
+    </g>
+    <text x="32" y="303" font-size="12" fill="#B6C4B8">UTF-8</text>
+    <text x="912" y="303" text-anchor="end" font-size="12" fill="#8DBB9A">hardware / embedded</text>
+  </g>
+  <!-- A small, aligned pixel trail; no full-window texture. -->
+  <rect x="820" y="68" width="96" height="96" fill="url(#grid)" opacity="0.16"/>
+  <path d="M844 92H860V100H852V108H836V100H844Z" fill="#65786B"/>
+  <rect x="860" y="92" width="8" height="8" fill="#F46B5B"/>
+  <rect id="cursor" x="202" y="245" width="10" height="19" fill="#F2F0E6">
+    <animate attributeName="opacity" values="1;0" calcMode="discrete" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+</svg>
