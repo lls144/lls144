@@ -1,33 +1,25 @@
-[← 返回主页](README.md)
+[← 首页](README.md)
 
-# Embedded / Systems
+# Embedded & System Integration
 
-电源项目之外，几条通向接口、控制器与系统集成的支线。
+## 慧眼识珠 · 视觉到控制的完整链路
 
-<a id="linux"></a>
+Windows 上的 OpenCV 负责识别、ROI 与目标生命周期；控制后端分别采用 PLC 和 i.MX6ULL。Linux 路线通过 TCP JSON Lines 连接 FIFO、三工位 FSM、实体按键、RGB 与 LCD HMI。
 
-## Linux
+我负责视觉、Linux 控制器/HMI、接口规范、集成和真机验收，参与 PLC 开发与调试。
 
-i.MX6ULL 控制器与 HMI、通信状态机、Linux 端系统集成。RK3566 方向涉及外围电源与接口、I²C 触摸调试、Device Tree、Android / Ubuntu；基于现成核心板开展工作，不表述为独立设计 RK3566 核心板。
+- [工程案例：从视觉事件到嵌入式控制](projects/embedded-linux-vision.md)
+- [视觉综合实验 / PLC 集成](https://github.com/lls144/huiyan-shizhu)
+- [i.MX6ULL / 控制器与 HMI](https://github.com/lls144/huiyan-shizhu-imx6ull)
 
-<a id="stm32"></a>
+## 其他实践
 
-## STM32
+| 方向 | 实际工作 |
+|---|---|
+| STM32 / Embedded C | 电源控制中的 HRTIM、ADC/DMA、PWM、CAN 与板卡联调 |
+| RK3566 | 基于参考板进行外围电源/接口、I²C 触摸设备树、系统烧录及存储扩容调试 |
+| K230 / MSPM0 | K230 Linux 视觉部署与 UART 坐标通信，配合 MSPM0 云台控制和按键板 |
+| K210 / STM32 | 整车 PCB 设计 |
+| 点云工具 | Python / Open3D / PySide6 处理链；C++ / Qt / PCL / VTK 查看器探索，两者实现范围分别记录 |
 
-Embedded C、PWM、ADC、DMA、CAN。最具体的入口是 [Supercapacitor Controller](projects/supercapacitor.md) 的采样与控制链，以及 [Bidirectional DC/DC](projects/bidirectional-dcdc.md) 的控制／采样电路设计。
-
-<a id="plc"></a>
-
-## PLC
-
-S7-1200 / TIA Portal、通信与状态机。参与控制开发及联调，并承担系统集成；团队 PLC 实现不表述为个人独立完成。
-
-<a id="vision"></a>
-
-## Vision
-
-Linux + OpenCV 视觉链路与板端系统集成；K230 方向涉及目标检测、模型部署、双自由度云台及 UART 通信。
-
----
-
-[返回 Project Select](README.md)
+这些方向暂不堆叠项目数量；有完整资料与可公开证据后再扩展独立档案。
