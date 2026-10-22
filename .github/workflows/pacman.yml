@@ -10,6 +10,7 @@ on:
       - .github/workflows/pacman.yml
       - tools/pacman-network.cjs
       - tools/validate_pacman.py
+      - tools/tests/**
 
 permissions: {}
 
@@ -29,6 +30,11 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+
+      - name: Test calendar boundaries and rejection paths
+        run: |
+          node --test tools/tests/test-pacman-calendar.cjs
+          python3 -m unittest discover -s tools/tests -p 'test_*.py' -v
 
       - name: Generate real GitHub contribution graphs
         uses: abozanona/pacman-contribution-graph@7332e1de7903ab780c3692a4127a59cc13872daa # v5.3.2

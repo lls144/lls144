@@ -2,7 +2,7 @@
 
 # Embedded & System Integration
 
-## 慧眼识珠 · 视觉到控制的完整链路
+## 基于 OpenCV 的视觉分拣与双后端控制系统
 
 Windows 上的 OpenCV 负责识别、ROI 与目标生命周期；控制后端分别采用 PLC 和 i.MX6ULL。Linux 路线通过 TCP JSON Lines 连接 FIFO、三工位 FSM、实体按键、RGB 与 LCD HMI。
 

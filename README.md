@@ -20,7 +20,7 @@
 
 #### [Embedded & System Integration](systems.md)
 
-慧眼识珠：OpenCV 视觉事件连接控制器、FIFO / FSM 与 HMI，分别验证 PLC 和 Linux 后端。
+视觉分拣控制系统：OpenCV 视觉事件连接控制器、FIFO / FSM 与 HMI，分别验证 PLC 和 Linux 后端。
 
 [视觉 / PLC 集成](https://github.com/lls144/huiyan-shizhu) · [i.MX6ULL / Linux 控制与 HMI](https://github.com/lls144/huiyan-shizhu-imx6ull) · [工程记录](projects/embedded-linux-vision.md)
 
